@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'BucketName', defaultValue: 'my-unique-bucket-name', description: 'Name for the S3 bucket')
+    }
+
     environment {
         AWS_DEFAULT_REGION = 'us-west-2'
         STACK_NAME = 'my-s3-bucket-stack'
@@ -11,7 +15,9 @@ pipeline {
         stage('Deploy CloudFormation Stack') {
             steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'Nani', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-                    sh 'aws cloudformation deploy --template-file $TEMPLATE_FILE --stack-name $STACK_NAME --capabilities CAPABILITY_IAM'
+                    script {
+                        sh "aws cloudformation deploy --template-file $TEMPLATE_FILE --stack-name $STACK_NAME --parameter-overrides BucketName=${params.BucketName} --capabilities CAPABILITY_IAM"
+                    }
                 }
             }
         }

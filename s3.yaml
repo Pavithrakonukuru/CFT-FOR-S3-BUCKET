@@ -1,8 +1,13 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Create an S3 bucket using CloudFormation
 
+Parameters:
+  BucketName:
+    Type: String
+    Description: Name for the S3 bucket
+
 Resources:
   MyS3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: nani
+      BucketName: !Ref BucketName
