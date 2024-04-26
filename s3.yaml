@@ -1,6 +1,8 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create an S3 bucket using CloudFormation
+
 Resources:
-  S3Bucket:
-    Type: 'AWS::S3::Bucket'
-    DeletionPolicy: Retain
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
     Properties:
-      BucketName: kp-s3-buck
+      BucketName: aa-bucket

@@ -1,11 +1,28 @@
-Pipeline {
+pipeline {
     agent any
+
+    environment {
+        AWS_DEFAULT_REGION = 'us-west-2'
+        STACK_NAME = 'my-s3-bucket-stack'
+        TEMPLATE_FILE = 's3.yaml'
+    }
+
     stages {
-        stage ('git checkout') {
+        stage('Deploy CloudFormation Stack') {
             steps {
-                sh 'export AWS_DEFAULT_REGION=us-west-2'
-                sh 'aws cloudformation create-stack --stack-name iamuser --template-body file://s3.json --region us-west-2'
+                script {
+                    sh 'aws cloudformation deploy --template-file $TEMPLATE_FILE --stack-name $STACK_NAME --capabilities CAPABILITY_IAM'
+                }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'CloudFormation stack deployed successfully!'
+        }
+        failure {
+            echo 'CloudFormation stack deployment failed!'
         }
     }
 }
