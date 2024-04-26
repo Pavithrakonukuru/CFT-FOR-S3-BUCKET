@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        AWS_DEFAULT_REGION = 'your-aws-region'
+        AWS_DEFAULT_REGION = 'us-west-2'
         STACK_NAME = 'my-s3-bucket-stack'
-        TEMPLATE_FILE = 's3_bucket.yaml'
+        TEMPLATE_FILE = 's3.yaml'
     }
 
     stages {
