@@ -16,7 +16,7 @@ pipeline {
             steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'Nani', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     script {
-                        sh "aws cloudformation delete-stack --stack-name $STACK_NAME"
+                        sh "aws cloudformation deploy --template-file $TEMPLATE_FILE --stack-name $STACK_NAME --parameter-overrides BucketName=${params.BucketName} --capabilities CAPABILITY_IAM"
                     }
                 }
             }
