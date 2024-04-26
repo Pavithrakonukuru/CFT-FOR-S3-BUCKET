@@ -4,7 +4,7 @@
       "MyS3Bucket": {
         "Type": "AWS::S3::Bucket",
         "Properties": {
-          "BucketName": "my-example-bucket"
+          "BucketName": "nani"
         }
       }
     }
